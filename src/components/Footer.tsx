@@ -17,7 +17,7 @@ export default function Footer() {
             </a>
           ))}
         </nav>
-        <p className="text-sm text-[var(--muted)]">© {year}</p>
+        <p className="text-sm text-[var(--muted)]">© {year} {site.name}</p>
       </div>
     </footer>
   );

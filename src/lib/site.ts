@@ -1,6 +1,6 @@
 export const site = {
-  name: "PRISMA",
-  mark: "PRISMA®",
+  name: "PRISMA STUDIO",
+  mark: "PRISMA STUDIO",
   email: "ola@prismastudio.dev",
   city: "São Paulo, BR",
   line: "Design · Desenvolvimento · Experiência Digital",

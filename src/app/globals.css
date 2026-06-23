@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Coolvetica";
+  src: url("/fonts/CoolveticaRg-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 :root {
   --bg: #070707;
   --bg-soft: #f2efe8;
@@ -18,8 +27,8 @@
   --color-fg-dark: var(--fg-dark);
   --color-muted: var(--muted);
   --color-lime: var(--lime);
-  --font-display: var(--font-syne);
-  --font-body: var(--font-inter);
+  --font-display: "Coolvetica", sans-serif;
+  --font-body: "Coolvetica", sans-serif;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,11 +37,12 @@ html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 
 body {
-  font-family: var(--font-body), system-ui, sans-serif;
+  font-family: "Coolvetica", system-ui, sans-serif;
   background: var(--bg);
   color: var(--fg);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  letter-spacing: 0.04em;
 }
 
 ::selection { background: var(--lime); color: var(--fg-dark); }
@@ -53,9 +63,9 @@ body {
 }
 
 .headline {
-  font-family: var(--font-display), sans-serif;
+  font-family: "Coolvetica", sans-serif;
   font-weight: 700;
-  letter-spacing: -0.04em;
+  letter-spacing: 0.02em;
   line-height: 0.95;
 }
 

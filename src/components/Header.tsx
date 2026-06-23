@@ -7,9 +7,9 @@ export default function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 right-0 left-0 z-50 px-5 pt-5">
-      <div className="wrap flex items-center justify-between rounded-full border border-[var(--border)] bg-[rgba(7,7,7,0.65)] px-5 py-3 backdrop-blur-xl">
-        <a href="#" className="headline text-lg text-[var(--fg)]">
+    <header className="fixed top-0 right-0 left-0 z-50 border-b border-[var(--border)] bg-[rgba(7,7,7,0.75)] backdrop-blur-xl">
+      <div className="wrap flex items-center justify-between px-2 py-4">
+        <a href="#" className="headline text-xl text-[var(--fg)]">
           {site.mark}
         </a>
 
@@ -19,7 +19,7 @@ export default function Header() {
               {n.label}
             </a>
           ))}
-          <a href="#contact" className="btn btn-lime !py-2 !px-4 !text-sm">
+          <a href="#contact" className="btn btn-lime !py-2 !px-5 !text-sm">
             Fale conosco
           </a>
         </nav>
