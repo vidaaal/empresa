@@ -3,41 +3,54 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { awards } from "@/lib/data";
-import Section, { SectionLabel, SectionTitle } from "@/components/ui/Section";
+import TextReveal from "@/components/ui/TextReveal";
 
 export default function Statement() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <Section className="section-padding-sm">
-      <motion.div
-        ref={ref}
-        initial={{ opacity: 0, y: 24 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8 }}
-        className="soft-card mx-auto max-w-[980px] px-6 py-10 md:px-10 md:py-14"
-      >
-        <SectionLabel>Sobre o estúdio</SectionLabel>
-        <SectionTitle className="max-w-[760px]">
-          Construímos marcas, produtos e experiências digitais com a mesma
-          narrativa em cada ponto de contato.
-        </SectionTitle>
+    <section className="dark-section section-padding">
+      <div className="mesh-bg">
+        <div className="mesh-orb mesh-orb-1 !opacity-60" />
+        <div className="mesh-orb mesh-orb-3 !opacity-50" />
+      </div>
 
-        <p className="mt-6 max-w-[680px] font-body text-[17px] leading-[1.7] text-muted">
-          {awards[0]} · {awards[2]}. Unimos estratégia, design e engenharia
-          para transformar visão em valor real — com processo cuidadoso e
-          parceria de perto com cada cliente.
-        </p>
-
-        <div className="mt-8 flex flex-wrap gap-2.5">
-          {awards.slice(0, 3).map((award) => (
-            <span key={award} className="pill pill-muted">
+      <div ref={ref} className="section-container relative z-10 max-w-[1100px]">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="mb-8 flex flex-wrap gap-2"
+        >
+          {awards.map((award) => (
+            <span
+              key={award}
+              className="rounded-full border border-white/10 bg-white/5 px-4 py-2 font-body text-[12px] font-medium text-white/70 backdrop-blur-sm"
+            >
               {award}
             </span>
           ))}
-        </div>
-      </motion.div>
-    </Section>
+        </motion.div>
+
+        <TextReveal
+          as="h2"
+          text="Construímos marcas, produtos e experiências que transformam visão em valor real."
+          highlight={["valor", "real."]}
+          className="font-display text-[clamp(2rem,4.5vw,3.75rem)] leading-[1.08] font-semibold tracking-[-0.03em] text-[#f5f2ea]"
+          delay={0.1}
+        />
+
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.8, duration: 0.7 }}
+          className="mt-8 max-w-2xl font-body text-[17px] leading-[1.75] text-white/55"
+        >
+          Unimos estratégia, design e tecnologia em uma única narrativa — para
+          que cada ponto de contato pareça inevitável, não decorativo.
+        </motion.p>
+      </div>
+    </section>
   );
 }

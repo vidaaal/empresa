@@ -10,38 +10,35 @@ export default function Process() {
   const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <Section id="processo">
-      <motion.div
-        ref={ref}
-        initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.7 }}
-      >
+    <Section id="processo" className="bg-surface-soft/40">
+      <motion.div ref={ref} initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : {}}>
         <SectionLabel>Como trabalhamos</SectionLabel>
-        <SectionTitle className="mb-10 md:mb-12">Nosso processo</SectionTitle>
+        <SectionTitle className="mb-12">Do insight ao lançamento</SectionTitle>
 
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {process.map((step, i) => (
-            <motion.article
-              key={step.step}
-              initial={{ opacity: 0, y: 18 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: i * 0.07, duration: 0.55 }}
-              className="soft-card p-6 md:p-7"
-            >
-              <div className="mb-4 flex items-center gap-3">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-accent text-[13px] font-semibold text-white">
+        <div className="relative">
+          <div className="absolute top-8 right-0 left-8 hidden h-px bg-border md:block" />
+
+          <div className="grid gap-5 md:grid-cols-5">
+            {process.map((step, i) => (
+              <motion.article
+                key={step.step}
+                initial={{ opacity: 0, y: 24 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ delay: i * 0.09, duration: 0.6 }}
+                className="soft-card relative p-6 transition-transform duration-500 hover:-translate-y-2 md:p-7"
+              >
+                <div className="mb-5 flex h-10 w-10 items-center justify-center rounded-full bg-accent font-body text-[13px] font-bold text-white">
                   {step.step}
-                </span>
-                <h3 className="font-display text-[1.2rem] font-semibold tracking-[-0.02em]">
+                </div>
+                <h3 className="font-display text-[1.15rem] font-semibold tracking-[-0.02em]">
                   {step.title}
                 </h3>
-              </div>
-              <p className="font-body text-[15px] leading-[1.65] text-muted">
-                {step.text}
-              </p>
-            </motion.article>
-          ))}
+                <p className="mt-3 font-body text-[14px] leading-[1.65] text-muted">
+                  {step.text}
+                </p>
+              </motion.article>
+            ))}
+          </div>
         </div>
       </motion.div>
     </Section>
