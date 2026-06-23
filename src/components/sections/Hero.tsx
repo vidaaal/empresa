@@ -1,111 +1,91 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import Image from "next/image";
 import { company } from "@/lib/data";
 
 export default function Hero() {
-  const containerRef = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
-    target: containerRef,
+    target: ref,
     offset: ["start start", "end start"],
   });
-
-  const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-
-  const words = ["Criamos", "experiências", "digitais"];
+  const y = useTransform(scrollYProgress, [0, 1], [0, 80]);
 
   return (
-    <section
-      ref={containerRef}
-      className="relative flex min-h-screen flex-col justify-end overflow-hidden px-6 pb-16 md:px-12 md:pb-24"
-    >
-      <motion.div style={{ y, opacity }} className="relative z-10">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-          className="mb-8 font-body text-sm tracking-[0.3em] text-muted uppercase md:mb-12"
-        >
-          {company.tagline}
-        </motion.p>
+    <section ref={ref} className="section-padding pt-36 md:pt-44">
+      <div className="section-container max-w-[1400px]">
+        <div className="grid items-end gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
+          <motion.div style={{ y }} className="max-w-2xl">
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="mb-6 font-body text-[15px] font-medium text-muted"
+            >
+              {company.tagline}
+            </motion.p>
 
-        <h1 className="font-display text-[clamp(3rem,10vw,9rem)] leading-[0.9] font-bold tracking-tight">
-          {words.map((word, i) => (
-            <span key={word} className="block overflow-hidden">
-              <motion.span
-                className="inline-block"
-                initial={{ y: "110%" }}
-                animate={{ y: 0 }}
-                transition={{
-                  delay: 1.4 + i * 0.12,
-                  duration: 1,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="font-display text-[clamp(2.75rem,6vw,4.75rem)] leading-[1.02] font-semibold tracking-[-0.03em] text-foreground"
+            >
+              Somos um estúdio digital onde criatividade encontra tecnologia.
+            </motion.h1>
+
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.35 }}
+              className="mt-8 flex flex-wrap items-center gap-4"
+            >
+              <a
+                href="#trabalhos"
+                className="rounded-full bg-foreground px-6 py-3 font-body text-[14px] font-medium text-white transition-transform hover:scale-[1.02]"
               >
-                {word}
-                {i === 1 && (
-                  <span className="text-accent">.</span>
-                )}
-              </motion.span>
-            </span>
-          ))}
-        </h1>
+                Ver todos os trabalhos
+              </a>
+              <a href="#servicos" className="link-soft">
+                Conhecer serviços
+                <span aria-hidden>→</span>
+              </a>
+            </motion.div>
+          </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.2, duration: 1 }}
-          className="mt-12 flex flex-col gap-6 md:mt-16 md:flex-row md:items-end md:justify-between"
-        >
-          <p className="max-w-md font-body text-base leading-relaxed text-muted md:text-lg">
-            Desde {company.founded}, ajudamos startups inovadoras e marcas
-            premium a projetar, construir e lançar produtos que merecem ser
-            comentados.
-          </p>
-
-          <a
-            href="#trabalhos"
-            className="group flex items-center gap-4"
-            data-cursor="pointer"
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="relative"
           >
-            <span className="font-body text-sm tracking-widest uppercase">
-              Ver trabalhos
-            </span>
-            <span className="flex h-12 w-12 items-center justify-center rounded-full border border-foreground/20 transition-all duration-500 group-hover:border-accent group-hover:bg-accent group-hover:text-background">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path
-                  d="M3 8H13M13 8L9 4M13 8L9 12"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                />
-              </svg>
-            </span>
-          </a>
-        </motion.div>
-      </motion.div>
+            <div className="image-shell relative aspect-[4/5] overflow-hidden shadow-[0_40px_100px_-40px_rgba(28,28,26,0.28)] md:aspect-[5/6]">
+              <Image
+                src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&q=80"
+                alt="Estúdio digital"
+                fill
+                className="object-cover"
+                priority
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
+              <div className="absolute right-5 bottom-5 left-5 rounded-[20px] bg-white/90 p-4 backdrop-blur-md">
+                <p className="font-body text-[13px] font-medium text-muted">
+                  Desde {company.founded}
+                </p>
+                <p className="mt-1 font-display text-lg font-semibold tracking-[-0.02em]">
+                  Design premium, código e experiências que conectam.
+                </p>
+              </div>
+            </div>
 
-      {/* Decorative gradient orb */}
-      <div className="pointer-events-none absolute top-1/4 right-0 h-[500px] w-[500px] rounded-full bg-accent/5 blur-[120px]" />
-      <div className="pointer-events-none absolute bottom-0 left-0 h-[300px] w-[300px] rounded-full bg-accent/3 blur-[100px]" />
-
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2.5, duration: 1 }}
-        className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2"
-      >
-        <span className="font-body text-[10px] tracking-[0.3em] text-muted uppercase">
-          Scroll
-        </span>
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-          className="h-8 w-[1px] bg-foreground/30"
-        />
-      </motion.div>
+            <div className="absolute -top-4 -left-4 hidden h-20 w-20 rounded-full bg-accent/10 md:block" />
+            <div className="absolute -right-3 bottom-16 hidden h-14 w-14 rounded-[18px] bg-surface-soft md:block" />
+          </motion.div>
+        </div>
+      </div>
     </section>
   );
 }

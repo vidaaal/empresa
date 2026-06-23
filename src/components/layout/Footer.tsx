@@ -3,56 +3,43 @@
 import { company, navLinks } from "@/lib/data";
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
+  const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-border bg-surface">
-      {/* Giant footer text — Metalab/Obys style */}
-      <div className="overflow-hidden px-6 py-16 md:px-12 md:py-24">
-        <h2 className="font-display text-[clamp(4rem,15vw,12rem)] leading-[0.85] font-bold tracking-tight text-foreground/5 uppercase">
-          {company.name}
-        </h2>
-      </div>
+    <footer className="mt-8 border-t border-border pb-8">
+      <div className="section-container max-w-[1200px] pt-10">
+        <div className="soft-card grid gap-8 p-6 md:grid-cols-[1.2fr_0.8fr_0.8fr] md:p-8">
+          <div>
+            <p className="font-display text-xl font-semibold tracking-[-0.02em]">
+              {company.fullName}
+            </p>
+            <p className="mt-2 max-w-sm font-body text-[14px] leading-relaxed text-muted">
+              {company.tagline}
+            </p>
+          </div>
 
-      <div className="grid border-t border-border md:grid-cols-3">
-        <div className="border-b border-border px-6 py-8 md:border-r md:border-b-0 md:px-12">
-          <p className="font-body text-sm text-muted">
-            {company.fullName}
-            <br />
-            {company.tagline}
-          </p>
-        </div>
-
-        <div className="border-b border-border px-6 py-8 md:border-r md:border-b-0 md:px-12">
-          <nav className="flex flex-col gap-3">
+          <nav className="flex flex-col gap-2.5">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="link-hover w-fit font-body text-sm text-muted transition-colors hover:text-foreground"
-                data-cursor="pointer"
+                className="font-body text-[14px] text-muted transition-colors hover:text-foreground"
               >
                 {link.label}
               </a>
             ))}
           </nav>
+
+          <div>
+            <p className="font-body text-[14px] text-foreground">{company.email}</p>
+            <p className="mt-1 font-body text-[14px] text-muted">{company.location}</p>
+          </div>
         </div>
 
-        <div className="px-6 py-8 md:px-12">
-          <p className="font-body text-sm text-muted">{company.email}</p>
-          <p className="mt-1 font-body text-sm text-muted">
-            {company.location}
-          </p>
+        <div className="mt-6 flex flex-col gap-2 px-2 text-[13px] text-muted md:flex-row md:items-center md:justify-between">
+          <p>© {year} {company.fullName}. Todos os direitos reservados.</p>
+          <p>Feito com cuidado e atenção ao detalhe.</p>
         </div>
-      </div>
-
-      <div className="flex flex-col items-center justify-between gap-4 border-t border-border px-6 py-6 md:flex-row md:px-12">
-        <p className="font-body text-xs text-muted">
-          Todos os direitos reservados. ©{currentYear} {company.fullName}
-        </p>
-        <p className="font-body text-xs text-muted">
-          Feito com obsessão por detalhe.
-        </p>
       </div>
     </footer>
   );

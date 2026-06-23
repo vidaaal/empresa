@@ -1,90 +1,53 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { featured } from "@/lib/data";
+import Section, { SectionLabel, SectionTitle } from "@/components/ui/Section";
 
 export default function Featured() {
-  const ref = useRef<HTMLElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-  const [active, setActive] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <section className="border-t border-border px-6 py-24 md:px-12 md:py-40">
+    <Section>
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        ref={ref}
+        initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8 }}
-        className="mb-16"
+        transition={{ duration: 0.7 }}
       >
-        <span className="font-body text-sm tracking-[0.3em] text-accent uppercase">
-          Parcerias
-        </span>
-        <h2 className="mt-4 font-display text-[clamp(2rem,5vw,4rem)] leading-[0.95] font-bold tracking-tight">
+        <SectionLabel>Parcerias</SectionLabel>
+        <SectionTitle className="mb-10 md:mb-12">
           Engajamentos em destaque
-        </h2>
-      </motion.div>
+        </SectionTitle>
 
-      <div className="grid gap-12 md:grid-cols-12">
-        {/* Client list — Basic Agency drag style */}
-        <div className="flex flex-col gap-0 md:col-span-5">
+        <div className="grid gap-4 md:grid-cols-2">
           {featured.map((item, i) => (
-            <button
+            <motion.article
               key={item.client}
-              onClick={() => setActive(i)}
-              className={`group flex items-center justify-between border-b border-border py-6 text-left transition-colors ${
-                active === i ? "text-foreground" : "text-muted"
-              }`}
-              data-cursor="pointer"
+              initial={{ opacity: 0, y: 18 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: i * 0.08, duration: 0.55 }}
+              className="soft-card flex h-full flex-col p-6 md:p-7"
             >
-              <span className="font-display text-2xl font-bold tracking-tight md:text-3xl">
+              <h3 className="font-display text-[1.5rem] font-semibold tracking-[-0.02em]">
                 {item.client}
-              </span>
-              <span
-                className={`font-body text-sm transition-colors ${
-                  active === i ? "text-accent" : "text-muted"
-                }`}
-              >
-                {String(i + 1).padStart(2, "0")}
-              </span>
-            </button>
-          ))}
-        </div>
-
-        {/* Detail panel */}
-        <div className="flex flex-col justify-center md:col-span-7 md:pl-16">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={active}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.5 }}
-            >
-              <p className="font-body text-lg leading-relaxed text-muted md:text-xl">
-                {featured[active].description}
+              </h3>
+              <p className="mt-3 flex-1 font-body text-[15px] leading-[1.65] text-muted">
+                {item.description}
               </p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                {featured[active].tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full bg-accent/10 px-4 py-1.5 font-body text-xs tracking-wide text-accent"
-                  >
+              <div className="mt-5 flex flex-wrap gap-2">
+                {item.tags.map((tag) => (
+                  <span key={tag} className="pill pill-muted !px-3 !py-1.5 !text-[12px]">
                     {tag}
                   </span>
                 ))}
               </div>
-              <a
-                href="#"
-                className="link-hover mt-8 inline-block font-body text-sm tracking-widest text-foreground uppercase"
-                data-cursor="pointer"
-              >
-                Ver case completo →
-              </a>
-            </motion.div>
-          </AnimatePresence>
+            </motion.article>
+          ))}
         </div>
-      </div>
-    </section>
+      </motion.div>
+    </Section>
   );
 }

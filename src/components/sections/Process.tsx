@@ -3,50 +3,47 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { process } from "@/lib/data";
+import Section, { SectionLabel, SectionTitle } from "@/components/ui/Section";
 
 export default function Process() {
-  const ref = useRef<HTMLElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <section id="processo" ref={ref} className="px-6 py-24 md:px-12 md:py-40">
+    <Section id="processo">
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        ref={ref}
+        initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8 }}
-        className="mb-16 md:mb-24"
+        transition={{ duration: 0.7 }}
       >
-        <span className="font-body text-sm tracking-[0.3em] text-accent uppercase">
-          Como trabalhamos
-        </span>
-        <h2 className="mt-4 font-display text-[clamp(2.5rem,6vw,5rem)] leading-[0.95] font-bold tracking-tight">
-          Nosso
-          <br />
-          processo<span className="text-accent">.</span>
-        </h2>
-      </motion.div>
+        <SectionLabel>Como trabalhamos</SectionLabel>
+        <SectionTitle className="mb-10 md:mb-12">Nosso processo</SectionTitle>
 
-      <div className="space-y-0">
-        {process.map((step, i) => (
-          <motion.div
-            key={step.step}
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: i * 0.1, duration: 0.6 }}
-            className="group grid grid-cols-12 items-center gap-4 border-t border-border py-8 md:py-12"
-          >
-            <span className="number-display col-span-2 font-display text-3xl font-bold text-foreground/15 transition-colors group-hover:text-accent md:col-span-1 md:text-5xl">
-              {step.step}
-            </span>
-            <h3 className="col-span-4 font-display text-xl font-bold tracking-tight md:col-span-3 md:text-3xl">
-              {step.title}
-            </h3>
-            <p className="col-span-6 font-body text-sm leading-relaxed text-muted md:col-span-8 md:text-base">
-              {step.text}
-            </p>
-          </motion.div>
-        ))}
-      </div>
-    </section>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {process.map((step, i) => (
+            <motion.article
+              key={step.step}
+              initial={{ opacity: 0, y: 18 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: i * 0.07, duration: 0.55 }}
+              className="soft-card p-6 md:p-7"
+            >
+              <div className="mb-4 flex items-center gap-3">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-accent text-[13px] font-semibold text-white">
+                  {step.step}
+                </span>
+                <h3 className="font-display text-[1.2rem] font-semibold tracking-[-0.02em]">
+                  {step.title}
+                </h3>
+              </div>
+              <p className="font-body text-[15px] leading-[1.65] text-muted">
+                {step.text}
+              </p>
+            </motion.article>
+          ))}
+        </div>
+      </motion.div>
+    </Section>
   );
 }

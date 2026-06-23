@@ -1,13 +1,10 @@
 import SmoothScroll from "@/components/providers/SmoothScroll";
-import Preloader from "@/components/layout/Preloader";
-import CustomCursor from "@/components/layout/CustomCursor";
 import Navbar from "@/components/layout/Navbar";
 import Hero from "@/components/sections/Hero";
-import Marquee from "@/components/sections/Marquee";
+import ClientRoster from "@/components/sections/ClientRoster";
 import Statement from "@/components/sections/Statement";
-import Showreel from "@/components/sections/Showreel";
-import Services from "@/components/sections/Services";
 import Work from "@/components/sections/Work";
+import Services from "@/components/sections/Services";
 import Featured from "@/components/sections/Featured";
 import About from "@/components/sections/About";
 import Process from "@/components/sections/Process";
@@ -17,17 +14,13 @@ import Footer from "@/components/layout/Footer";
 export default function Home() {
   return (
     <SmoothScroll>
-      <Preloader />
-      <CustomCursor />
-      <div className="grain" />
       <Navbar />
       <main>
         <Hero />
-        <Marquee />
+        <ClientRoster />
         <Statement />
-        <Showreel />
-        <Services />
         <Work />
+        <Services />
         <Featured />
         <About />
         <Process />

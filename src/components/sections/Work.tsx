@@ -1,117 +1,97 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
-import { projects } from "@/lib/data";
+import { projects, workFilters, projectFilters } from "@/lib/data";
+import Section, { SectionLabel, SectionTitle } from "@/components/ui/Section";
 
 export default function Work() {
-  const ref = useRef<HTMLElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-60px" });
+  const [filter, setFilter] = useState<(typeof workFilters)[number]>("Todos");
+
+  const filtered =
+    filter === "Todos"
+      ? projects
+      : projects.filter((p) => projectFilters[p.id] === filter);
+
+  const layoutPattern = [
+    "md:col-span-7 md:row-span-2",
+    "md:col-span-5",
+    "md:col-span-5",
+    "md:col-span-7",
+    "md:col-span-6",
+    "md:col-span-6",
+    "md:col-span-5",
+    "md:col-span-7",
+  ];
 
   return (
-    <section id="trabalhos" ref={ref} className="py-24 md:py-40">
-      <div className="mb-16 px-6 md:mb-24 md:px-12">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="flex flex-col justify-between gap-6 md:flex-row md:items-end"
-        >
-          <div>
-            <span className="font-body text-sm tracking-[0.3em] text-accent uppercase">
-              Portfólio
-            </span>
-            <h2 className="mt-4 font-display text-[clamp(2.5rem,6vw,5rem)] leading-[0.95] font-bold tracking-tight">
-              Trabalhos
-              <br />
-              selecionados<span className="text-accent">.</span>
-            </h2>
-          </div>
-          <p className="max-w-sm font-body text-sm text-muted md:text-base">
-            Cada projeto é um estudo de caso — desenvolvido com cuidado e
-            atenção aos detalhes.
-          </p>
-        </motion.div>
-      </div>
-
-      {/* Horizontal scroll gallery — Obys style */}
-      <div
-        ref={scrollRef}
-        className="no-scrollbar flex gap-6 overflow-x-auto px-6 pb-4 md:gap-8 md:px-12"
-        data-lenis-prevent
+    <Section id="trabalhos">
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: 20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.7 }}
       >
-        {projects.map((project, i) => (
-          <motion.a
-            key={project.id}
-            href="#"
-            initial={{ opacity: 0, y: 60 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: i * 0.08, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="project-card group shrink-0"
-            data-cursor="pointer"
-          >
-            <div className="relative h-[400px] w-[300px] overflow-hidden md:h-[500px] md:w-[380px]">
-              <Image
-                src={project.image}
-                alt={project.title}
-                fill
-                className="project-image object-cover"
-                sizes="380px"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-
-              {/* Number overlay — Obys style */}
-              <span className="number-display absolute top-6 left-6 font-display text-6xl font-bold text-white/20 md:text-8xl">
-                {project.id}
-              </span>
-
-              <div className="absolute right-0 bottom-0 left-0 p-6">
-                <span className="font-body text-xs tracking-widest text-accent uppercase">
-                  {project.category}
-                </span>
-                <h3 className="mt-2 font-display text-2xl font-bold text-white md:text-3xl">
-                  {project.title}
-                </h3>
-                <p className="mt-2 font-body text-xs text-white/60">
-                  {project.services}
-                </p>
-              </div>
-            </div>
-          </motion.a>
-        ))}
-      </div>
-
-      {/* Grid view — secondary layout */}
-      <div className="mt-16 hidden grid-cols-2 gap-px bg-border lg:grid lg:grid-cols-4">
-        {projects.slice(0, 4).map((project) => (
-          <a
-            key={`grid-${project.id}`}
-            href="#"
-            className="group relative aspect-square overflow-hidden bg-surface"
-            data-cursor="pointer"
-          >
-            <Image
-              src={project.image}
-              alt={project.title}
-              fill
-              className="object-cover opacity-60 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
-              sizes="25vw"
-            />
-            <div className="absolute inset-0 flex flex-col justify-between p-6">
-              <span className="number-display font-display text-4xl font-bold text-white/30">
-                {project.id}
-              </span>
-              <div>
-                <h3 className="font-display text-lg font-bold text-white">
-                  {project.title}
-                </h3>
-              </div>
-            </div>
+        <div className="mb-10 flex flex-col gap-6 md:mb-14 md:flex-row md:items-end md:justify-between">
+          <div>
+            <SectionLabel>Trabalhos recentes</SectionLabel>
+            <SectionTitle>Projetos que contam histórias</SectionTitle>
+          </div>
+          <a href="#contato" className="link-soft shrink-0">
+            Iniciar um projeto <span aria-hidden>→</span>
           </a>
-        ))}
-      </div>
-    </section>
+        </div>
+
+        <div className="mb-8 flex flex-wrap gap-2">
+          {workFilters.map((item) => (
+            <button
+              key={item}
+              onClick={() => setFilter(item)}
+              className={`pill ${filter === item ? "pill-active" : "pill-muted"}`}
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid auto-rows-[220px] grid-cols-1 gap-4 md:auto-rows-[180px] md:grid-cols-12 md:gap-5">
+          {filtered.map((project, i) => (
+            <motion.a
+              key={project.id}
+              href="#"
+              initial={{ opacity: 0, y: 24 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: i * 0.06, duration: 0.6 }}
+              className={`project-card group relative overflow-hidden ${layoutPattern[i % layoutPattern.length]}`}
+            >
+              <div className="image-shell relative h-full min-h-[260px] shadow-[0_20px_60px_-30px_rgba(28,28,26,0.25)]">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  className="project-image object-cover"
+                  sizes="(max-width: 768px) 100vw, 40vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+                <div className="absolute right-0 bottom-0 left-0 p-5 md:p-6">
+                  <span className="rounded-full bg-white/15 px-3 py-1 font-body text-[12px] font-medium text-white backdrop-blur-sm">
+                    {project.category}
+                  </span>
+                  <h3 className="mt-3 font-display text-2xl font-semibold tracking-[-0.02em] text-white md:text-[1.75rem]">
+                    {project.title}
+                  </h3>
+                  <p className="mt-1 font-body text-[14px] text-white/75">
+                    {project.services}
+                  </p>
+                </div>
+              </div>
+            </motion.a>
+          ))}
+        </div>
+      </motion.div>
+    </Section>
   );
 }

@@ -178,13 +178,26 @@ export const stats = [
   { value: "8", label: "Prêmios internacionais" },
 ];
 
-export const marqueeWords = [
-  "DESIGN",
-  "CÓDIGO",
-  "EXPERIÊNCIA",
-  "INOVAÇÃO",
-  "CRAFT",
-  "DIGITAL",
-  "PREMIUM",
-  "FUTURO",
+export const clients = [
+  "Nebula",
+  "Aura",
+  "Vertex",
+  "Kōhī",
+  "Synthwave",
+  "Maison",
+  "Terra Verde",
+  "Pulse",
 ];
+
+export const workFilters = ["Todos", "Branding", "Produto", "Marketing"] as const;
+
+export const projectFilters: Record<string, string> = {
+  "01": "Produto",
+  "02": "Branding",
+  "03": "Marketing",
+  "04": "Branding",
+  "05": "Produto",
+  "06": "Branding",
+  "07": "Produto",
+  "08": "Marketing",
+};

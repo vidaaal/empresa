@@ -9,31 +9,28 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="fixed top-0 right-0 left-0 z-[9000] mix-blend-difference">
-        <nav className="flex items-center justify-between px-6 py-6 md:px-12 md:py-8">
+      <header className="fixed top-0 right-0 left-0 z-[9000] px-4 pt-4 md:px-6 md:pt-6">
+        <nav className="section-container flex max-w-[1400px] items-center justify-between rounded-full border border-border/80 bg-surface/80 px-5 py-3 shadow-[0_12px_40px_-20px_rgba(28,28,26,0.18)] backdrop-blur-xl md:px-6 md:py-3.5">
           <a
             href="#"
-            className="font-display text-xl font-bold tracking-tight text-white md:text-2xl"
-            data-cursor="pointer"
+            className="font-display text-lg font-semibold tracking-[-0.02em] text-foreground"
           >
             {company.name}
           </a>
 
-          <div className="hidden items-center gap-12 md:flex">
+          <div className="hidden items-center gap-8 md:flex">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="link-hover font-body text-sm tracking-wide text-white/80 transition-colors hover:text-white"
-                data-cursor="pointer"
+                className="font-body text-[14px] font-medium text-muted transition-colors hover:text-foreground"
               >
                 {link.label}
               </a>
             ))}
             <a
               href="#contato"
-              className="rounded-full border border-white/30 px-6 py-2 font-body text-sm text-white transition-all hover:bg-white hover:text-black"
-              data-cursor="pointer"
+              className="rounded-full bg-foreground px-5 py-2.5 font-body text-[14px] font-medium text-white transition-transform hover:scale-[1.02]"
             >
               Fale conosco
             </a>
@@ -41,24 +38,15 @@ export default function Navbar() {
 
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="relative z-[9001] flex flex-col gap-1.5 md:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-surface-soft md:hidden"
             aria-label="Menu"
           >
-            <span
-              className={`block h-[2px] w-7 bg-white transition-transform duration-300 ${
-                menuOpen ? "translate-y-[5px] rotate-45" : ""
-              }`}
-            />
-            <span
-              className={`block h-[2px] w-7 bg-white transition-opacity duration-300 ${
-                menuOpen ? "opacity-0" : ""
-              }`}
-            />
-            <span
-              className={`block h-[2px] w-7 bg-white transition-transform duration-300 ${
-                menuOpen ? "-translate-y-[5px] -rotate-45" : ""
-              }`}
-            />
+            <span className="sr-only">Menu</span>
+            <div className="flex flex-col gap-1">
+              <span className={`block h-0.5 w-5 bg-foreground transition-transform ${menuOpen ? "translate-y-1.5 rotate-45" : ""}`} />
+              <span className={`block h-0.5 w-5 bg-foreground transition-opacity ${menuOpen ? "opacity-0" : ""}`} />
+              <span className={`block h-0.5 w-5 bg-foreground transition-transform ${menuOpen ? "-translate-y-1.5 -rotate-45" : ""}`} />
+            </div>
           </button>
         </nav>
       </header>
@@ -66,36 +54,26 @@ export default function Navbar() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ clipPath: "circle(0% at calc(100% - 40px) 40px)" }}
-            animate={{ clipPath: "circle(150% at calc(100% - 40px) 40px)" }}
-            exit={{ clipPath: "circle(0% at calc(100% - 40px) 40px)" }}
-            transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 z-[8999] flex flex-col justify-center bg-background px-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[8999] bg-background/95 backdrop-blur-md md:hidden"
           >
-            <nav className="flex flex-col gap-6">
+            <div className="flex h-full flex-col justify-center gap-6 px-8">
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  initial={{ opacity: 0, y: 40 }}
+                  initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + i * 0.05, duration: 0.6 }}
-                  className="font-display text-5xl font-bold tracking-tight text-foreground transition-colors hover:text-accent"
+                  transition={{ delay: i * 0.05 }}
+                  className="font-display text-4xl font-semibold tracking-[-0.02em]"
                 >
                   {link.label}
                 </motion.a>
               ))}
-            </nav>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="absolute bottom-12 left-8"
-            >
-              <p className="font-body text-sm text-muted">{company.email}</p>
-              <p className="mt-1 font-body text-sm text-muted">{company.location}</p>
-            </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
